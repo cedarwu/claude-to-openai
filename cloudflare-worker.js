@@ -144,7 +144,7 @@ async function streamJsonResponseBodies(response, writable) {
                     const decodedLine = JSON.parse(parts[1].slice(5));
                     console.log("decodedLine", decodedLine);
 
-                    transformedLine = claudeToChatGPTResponseStream(decodedLine, id, model);
+                    const transformedLine = claudeToChatGPTResponseStream(decodedLine, id, model);
                     writer.write(
                         encoder.encode(`data: ${JSON.stringify(transformedLine)}\n\n`)
                     );
@@ -195,7 +195,7 @@ async function handleRequest(request) {
             claudeRequestBody['temperature'] = temperature;
         }
 
-        console.log("requestBody", JSON.stringify(claudeRequestBody));
+        console.log("requestBody", claudeRequestBody);
 
         const claudeResponse = await fetch(`${CLAUDE_BASE_URL}/v1/messages`, {
             method: 'POST',
